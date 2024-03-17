@@ -89,7 +89,7 @@ Fix root and cli paths in cat /etc/nvidia-container-runtime/config.toml file
 ```
 sudo nano /etc/nvidia-container-runtime/config.toml
 ```
-Make sure this lines are commented
+Make sure these lines are commented
 ```
 ....
 #root = "/run/nvidia/driver"
@@ -120,7 +120,7 @@ make
 ```
 Another approach is to use yaml files from the repo. Please make sure that node affinity in the files setup correctly. 
 
-You can update .yaml file to choose proper selectors for you cluster configuration:
+You can update *.yaml file to choose proper selectors for you cluster configuration:
 ```
 .....
   affinity:

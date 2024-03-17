@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvidia-l4t-jetpack
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: nvidia-l4t-jetpack
+    image: "nvcr.io/nvidia/l4t-jetpack:r35.4.1"
+    resources:
+        limits:
+          nvidia.com/gpu: 1
+    args:
+       - /mnt/data/deviceQuery
+    volumeMounts:
+       - name: nvxxavier-pv
+         mountPath: /mnt/data
+  volumes:
+    - name: nvxxavier-pv
+      persistentVolumeClaim:
+        claimName: nvxxavier-pvc
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-role.kubernetes.io/master
+            operator: In
+            values:
+            - master
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nvxxavier-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  storageClassName: standard
+  hostPath:
+    path: /usr/local/cuda/samples/1_Utilities/deviceQuery
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nvxxavier-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+  volumeName: nvxxavier-pv

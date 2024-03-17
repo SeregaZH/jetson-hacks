@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nvidia-l4t-base
+spec:
+  restartPolicy: OnFailure
+  containers:
+  - name: nvidia-l4t-base
+    image: "nvcr.io/nvidia/l4t-base:r32.4.2"
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+    args:
+       - /mnt/data/deviceQuery
+    volumeMounts:
+       - name: nvjetson-pv
+         mountPath: /mnt/data
+  volumes:
+    - name: nvjetson-pv
+      persistentVolumeClaim:
+        claimName: nvjetson-pvc
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-role.kubernetes.io/worker
+            operator: In
+            values:
+            - worker
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: nvjetson-pv
+spec:
+  accessModes:
+    - ReadWriteOnce
+  capacity:
+    storage: 1Gi
+  storageClassName: standard
+  hostPath:
+    path: /usr/local/cuda/samples/1_Utilities/deviceQuery
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nvjetson-pvc
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: standard
+  volumeName: nvjetson-pv

@@ -1,4 +1,4 @@
-# Install Kubernatice on Xavier NX, Jetson Nano for Ubuntu 20.04
+# Install Kubernetes on Xavier NX, Jetson Nano for Ubuntu 20.04
 
  - Jetson Mate carrier board is used for installation https://wiki.seeedstudio.com/Jetson-Mate/
  - Cluster contains one Jetson Xavier NX and Jetson Nano modules both using Ubuntu 20.04.

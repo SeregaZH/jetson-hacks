@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 # Install Kubernetes on Xavier NX and Jetson Nano for Ubuntu 20.04
-=======
-# Install Kubernetes on Xavier NX, Jetson Nano for Ubuntu 20.04
->>>>>>> 421b27ad0fd1675df2b2b48323612030c545c993
 
 This guide provides instructions for installing Kubernetes on NVIDIA Jetson Xavier NX and Jetson Nano modules using the Jetson Mate carrier board and Ubuntu 20.04.
 
